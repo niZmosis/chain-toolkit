@@ -1,0 +1,61 @@
+{
+  "name": "chain-toolkit",
+  "version": "1.0.0",
+  "author": "niZmosis",
+  "license": "ISC",
+  "private": true,
+  "description": "Various configurations for blockchain networks.",
+  "keywords": [
+    "chain-toolkit",
+    "ethereum",
+    "blockchain"
+  ],
+  "homepage": "https://github.com/niZmosis/chain-toolkit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niZmosis/chain-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niZmosis/chain-toolkit/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "wipe": "lerna clean -y && rm -rf node_modules && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && find . -name 'dist' -type d -prune -exec rm -rf '{}' +",
+    "clean": "lerna clean -y",
+    "lint": "pnpm eslint --ext .ts,.tsx,.js,.jsx . --fix",
+    "prettier": "prettier --write .",
+    "build:docs": "typedoc",
+    "precommit": "pnpm prettier && pnpm lint && pnpm docs && pnpm test",
+    "test": "vitest run",
+    "build": "lerna run build",
+    "build:esm": "lerna run build:esm",
+    "build:cjs": "lerna run build:cjs",
+    "rebuild": "pnpm clean && pnpm build",
+    "restart": "pnpm clean && pnpm start",
+    "start": "lerna run start --parallel",
+    "prepack": "pnpm build",
+    "publish": "lerna run prepublish && lerna publish from-package --yes",
+    "publish:dry": "lerna run prepublish && lerna publish from-package --yes --dry-run"
+  },
+  "devDependencies": {
+    "@types/eslint": "8.56.11",
+    "@types/node": "22.6.1",
+    "@typescript-eslint/eslint-plugin": "7.17.0",
+    "@typescript-eslint/parser": "7.17.0",
+    "@vitest/coverage-v8": "2.0.5",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-unused-imports": "3.2.0",
+    "lerna": "8.1.8",
+    "madge": "^8.0.0",
+    "prettier": "3.3.3",
+    "ts-node": "10.9.2",
+    "typedoc": "0.26.4",
+    "typedoc-github-wiki-theme": "2.0.0",
+    "typedoc-plugin-markdown": "4.2.7",
+    "typescript": "5.5.4",
+    "vitest": "2.0.5"
+  }
+}
