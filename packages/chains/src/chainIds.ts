@@ -208,9 +208,9 @@ export const testChains: ChainId[] = [
   zoraSepoliaChainId,
 ]
 
-export const allChains: ChainId[] = [...mainChains, ...testChains]
+export const allChainIds: ChainId[] = [...mainChains, ...testChains]
 
-export type AllChainId = (typeof allChains)[number]
+export type AllChainId = (typeof allChainIds)[number]
 
 /**
  * Arrays of chain IDs for main and test chains.

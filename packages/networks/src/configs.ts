@@ -73,6 +73,7 @@ import {
   zksyncSepoliaChainId,
   zoraMainChainId,
   zoraSepoliaChainId,
+  allChainIds,
 } from '@chain-toolkit/chains'
 import type { ChainId, ChainConfig } from '@chain-toolkit/schemas'
 
@@ -148,6 +149,15 @@ export const defaultChainConfig: ChainConfig = {
     public: [],
   },
   contracts: {},
+}
+
+/**
+ * Retrieves the configuration for all supported chains.
+ *
+ * @returns {ChainConfig[]} An array of ChainConfig objects for all supported chains.
+ */
+export function getAllChainConfigs(): ChainConfig[] {
+  return allChainIds.map((chainId) => getChainConfig(chainId))
 }
 
 /**
