@@ -63,6 +63,9 @@ export const harmonyChainId: ChainId = 1666600000
 
 export const hecoChainId: ChainId = 128
 
+export const kccChainId: ChainId = 321
+export const kccTestnetChainId: ChainId = 322
+
 export const klaytnChainId: ChainId = 8217
 
 export const lineaMainChainId: ChainId = 59144
@@ -125,80 +128,87 @@ export const zoraSepoliaChainId: ChainId = 999999999
  * Arrays of chain IDs for various blockchain networks.
  */
 
-export const allChains: ChainId[] = [
+export const mainChains: ChainId[] = [
   arbitrumMainChainId,
-  arbitrumSepoliaChainId,
   astarChainId,
   auroraChainId,
   avaxMainChainId,
-  avaxFujiChainId,
   baseMainChainId,
-  baseSepoliaChainId,
   blastMainChainId,
-  blastSepoliaChainId,
-  bobaChainId,
   bobChainId,
+  bobaChainId,
   bscMainChainId,
-  bscTestChainId,
   celoMainChainId,
-  celoAlfajoresChainId,
   cronosChainId,
   energiMainChainId,
-  energiTestChainId,
   etherliteChainId,
   ethMainChainId,
-  ethHoleskyChainId,
-  ethSepoliaChainId,
   evmosMainnetChainId,
-  evmosTestnetChainId,
   fantomChainId,
-  fantomTestnetChainId,
   flareChainId,
-  flareSongbirdCanaryChainId,
   fuseChainId,
   godwokenMainnetChainId,
-  godwokenTestnetChainId,
-  ganacheChainId,
   harmonyChainId,
   hecoChainId,
+  kccChainId,
   klaytnChainId,
   lineaMainChainId,
-  lineaTestnetChainId,
   mantaPacificChainId,
   mantleMainnetChainId,
-  mantleSepoliaChainId,
   metisChainId,
   milkomedaChainId,
   modeChainId,
-  modeTestnetChainId,
-  moonbaseAlphaChainId,
   moonbeamChainId,
   moonriverChainId,
   oasisChainId,
-  oasisSapphireChainId,
   optimismMainChainId,
-  optimismSepoliaChainId,
   okcChainId,
   plsMainChainId,
-  plsTestChainId,
   polygonMainChainId,
-  polygonAmoyChainId,
   rskChainId,
-  rskTestnetChainId,
   scrollChainId,
-  scrollSepoliaChainId,
   shibariumChainId,
   thundercoreChainId,
-  thundercoreTestnetChainId,
   xdaiChainId,
-  xDaiTestnetChainId,
   zkEVMMainChainId,
-  zkEVMCardonaChainId,
   zksyncMainChainId,
-  zksyncSepoliaChainId,
   zoraMainChainId,
+]
+
+export const testChains: ChainId[] = [
+  arbitrumSepoliaChainId,
+  avaxFujiChainId,
+  baseSepoliaChainId,
+  blastSepoliaChainId,
+  bobSepoliaChainId,
+  bobaSepoliaChainId,
+  bscTestChainId,
+  celoAlfajoresChainId,
+  energiTestChainId,
+  ethHoleskyChainId,
+  ethSepoliaChainId,
+  evmosTestnetChainId,
+  fantomTestnetChainId,
+  flareSongbirdCanaryChainId,
+  godwokenTestnetChainId,
+  kccTestnetChainId,
+  lineaTestnetChainId,
+  mantleSepoliaChainId,
+  modeTestnetChainId,
+  moonbaseAlphaChainId,
+  optimismSepoliaChainId,
+  plsTestChainId,
+  polygonAmoyChainId,
+  rskTestnetChainId,
+  scrollSepoliaChainId,
+  thundercoreTestnetChainId,
+  xDaiTestnetChainId,
+  zkEVMCardonaChainId,
+  zksyncSepoliaChainId,
   zoraSepoliaChainId,
 ]
+
+export const allChains: ChainId[] = [...mainChains, ...testChains]
 
 export type AllChainId = (typeof allChains)[number]
 

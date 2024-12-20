@@ -79,7 +79,7 @@ export class ShibariumNetwork {
         ],
       },
       contracts: {
-        multicall: '0xcA11bde05977b3631167028862bE2a173976CA11',
+        multicall: '0xd1727fC8F78aBA7DD6294f6033D74c72Ccd3D3B0',
       },
       infoUrl: 'https://shibariumecosystem.com',
     }

@@ -34,6 +34,8 @@ import {
   godwokenTestnetChainId,
   harmonyChainId,
   hecoChainId,
+  kccChainId,
+  kccTestnetChainId,
   klaytnChainId,
   lineaMainChainId,
   lineaTestnetChainId,
@@ -97,6 +99,7 @@ import {
   GodwokenNetwork,
   HarmonyNetwork,
   HecoNetwork,
+  KccNetwork,
   KlaytnNetwork,
   LineaNetwork,
   MantleNetwork,
@@ -271,6 +274,12 @@ export function getChainConfig(chainId: ChainId): ChainConfig {
     // HECO
     case hecoChainId:
       return HecoNetwork.MAINNET()
+
+    // KCC
+    case kccChainId:
+      return KccNetwork.MAINNET()
+    case kccTestnetChainId:
+      return KccNetwork.TESTNET()
 
     // KLAYTN
     case klaytnChainId:

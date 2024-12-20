@@ -104,7 +104,7 @@ export class EnergiNetwork {
       ],
     },
     contracts: {
-      multicall: '0xbD6706747a7B6C8868Cf48735f48C341ea386d07',
+      multicall: undefined,
     },
   })
 
