@@ -109,6 +109,19 @@ export const NodeConfigBaseSchema = z.object({
 export type NodeConfigBase = z.infer<typeof NodeConfigBaseSchema>
 
 /**
+ * Authenticated provider types schema
+ */
+export const AuthenticatedProviderTypeSchema = z.union([
+  z.literal('infura'),
+  z.literal('infuraWSS'),
+  z.literal('alchemy'),
+  z.literal('alchemyWSS'),
+])
+export type AuthenticatedProviderType = z.infer<
+  typeof AuthenticatedProviderTypeSchema
+>
+
+/**
  * Schema for authenticated node configurations.
  */
 export const AuthenticatedNodeConfigSchema = NodeConfigBaseSchema.extend({
@@ -122,7 +135,9 @@ export type AuthenticatedNodeConfig = z.infer<
  * Schema for grouping node providers.
  */
 export const NodeProvidersSchema = z.object({
-  authenticated: z.record(z.string(), AuthenticatedNodeConfigSchema).optional(),
+  authenticated: z
+    .record(AuthenticatedProviderTypeSchema, AuthenticatedNodeConfigSchema)
+    .optional(),
   public: z.array(NodeConfigBaseSchema).optional(),
 })
 export type NodeProviders = z.infer<typeof NodeProvidersSchema>
