@@ -1,5 +1,5 @@
 import { auroraChainId } from '@chain-toolkit/chains'
-import type { ChainId, ChainConfig } from '@chain-toolkit/schemas'
+import type { ChainId, ChainConfig } from '@chain-toolkit/types'
 
 const commonProps: Omit<
   ChainConfig,

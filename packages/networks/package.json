@@ -31,6 +31,6 @@
     "@chain-toolkit/chains": "workspace:*"
   },
   "devDependencies": {
-    "@chain-toolkit/schemas": "workspace:*"
+    "@chain-toolkit/types": "workspace:*"
   }
 }

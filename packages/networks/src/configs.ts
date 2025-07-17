@@ -10,7 +10,9 @@ import {
   blastMainChainId,
   blastSepoliaChainId,
   bobaChainId,
+  bobaSepoliaChainId,
   bobChainId,
+  bobSepoliaChainId,
   bscMainChainId,
   bscTestChainId,
   celoMainChainId,
@@ -75,7 +77,7 @@ import {
   zoraSepoliaChainId,
   allChainIds,
 } from '@chain-toolkit/chains'
-import type { ChainId, ChainConfig } from '@chain-toolkit/schemas'
+import type { ChainId, ChainConfig } from '@chain-toolkit/types'
 
 import {
   ArbitrumNetwork,
@@ -206,10 +208,14 @@ export function getChainConfig(chainId: ChainId): ChainConfig {
     // BOBA
     case bobaChainId:
       return BobaNetwork.MAINNET()
+    case bobaSepoliaChainId:
+      return BobaNetwork.SEPOLIA()
 
     // BOB
     case bobChainId:
       return BobNetwork.MAINNET()
+    case bobSepoliaChainId:
+      return BobNetwork.SEPOLIA()
 
     // BSC
     case bscMainChainId:

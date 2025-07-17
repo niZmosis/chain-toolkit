@@ -68,7 +68,7 @@ importers:
 
   packages/chains:
     devDependencies:
-      '@chain-toolkit/schemas':
+      '@chain-toolkit/types':
         specifier: workspace:*
         version: link:../schemas
 
@@ -78,7 +78,7 @@ importers:
         specifier: workspace:*
         version: link:../chains
     devDependencies:
-      '@chain-toolkit/schemas':
+      '@chain-toolkit/types':
         specifier: workspace:*
         version: link:../schemas
 

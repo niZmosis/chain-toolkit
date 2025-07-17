@@ -1,14 +1,12 @@
 {
-  "name": "@chain-toolkit/schemas",
+  "name": "@chain-toolkit/types",
   "version": "1.0.0",
   "author": "niZmosis",
   "license": "ISC",
   "keywords": [
     "chain-toolkit",
     "ethereum",
-    "blockchain",
-    "schemas",
-    "zod"
+    "blockchain"
   ],
   "files": [
     "dist",
@@ -29,7 +27,8 @@
     "build:cjs": "tsc --project tsconfig.cjs.json",
     "start": "tsc -p tsconfig.esm.json --watch"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@chain-toolkit/schemas": "workspace:*",
     "zod": "^3.23.8"
   }
 }

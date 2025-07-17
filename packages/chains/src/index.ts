@@ -1,1 +1,1 @@
-export * from './chainIds'
+export * from './chain.ids'

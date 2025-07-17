@@ -1,1 +1,1 @@
-export * from './chainSchemas'
+export * from './chain.schemas'

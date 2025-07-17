@@ -1,4 +1,4 @@
-import type { ChainId } from '@chain-toolkit/schemas'
+import type { ChainId } from '@chain-toolkit/types'
 
 /**
  * Chain IDs for various blockchain networks.

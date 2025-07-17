@@ -4,7 +4,7 @@ import {
   scrollChainId,
   scrollSepoliaChainId,
 } from '@chain-toolkit/chains'
-import type { ChainId, ChainConfig } from '@chain-toolkit/schemas'
+import type { ChainId, ChainConfig } from '@chain-toolkit/types'
 
 const commonProps: Omit<
   ChainConfig,
@@ -67,7 +67,6 @@ export class ScrollNetwork {
             isWSS: false,
             chunkLimit: 50_000,
             callDataLimit: 100_000,
-            requiresAuth: true,
           },
           infuraWSS: {
             name: 'Infura WSS',
@@ -75,7 +74,6 @@ export class ScrollNetwork {
             isWSS: true,
             chunkLimit: 50_000,
             callDataLimit: 100_000,
-            requiresAuth: true,
           },
         },
         public: [
@@ -166,7 +164,6 @@ export class ScrollNetwork {
             isWSS: false,
             chunkLimit: 50_000,
             callDataLimit: 100_000,
-            requiresAuth: true,
           },
           infuraWSS: {
             name: 'Infura WSS',
@@ -174,7 +171,6 @@ export class ScrollNetwork {
             isWSS: true,
             chunkLimit: 50_000,
             callDataLimit: 100_000,
-            requiresAuth: true,
           },
         },
         public: [

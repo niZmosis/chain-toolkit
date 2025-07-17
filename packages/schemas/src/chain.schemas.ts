@@ -11,7 +11,13 @@ export const AddressSchema = z
 export const ChainIdSchema = z.number().int().positive({
   message: 'Chain ID must be a positive integer.',
 })
-export type ChainId = z.infer<typeof ChainIdSchema>
+
+/**
+ * Schema for chain ID (must be a positive integer).
+ */
+export const NetworkIdSchema = z.number().int().positive({
+  message: 'Network ID must be a positive integer.',
+})
 
 /**
  * Schema for chain types.
@@ -19,7 +25,6 @@ export type ChainId = z.infer<typeof ChainIdSchema>
 export const ChainTypeSchema = z.enum(['L1', 'L2'], {
   description: 'Type of blockchain network.',
 })
-export type ChainType = z.infer<typeof ChainTypeSchema>
 
 /**
  * Schema for the native currency of a blockchain.
@@ -32,7 +37,6 @@ export const NativeCurrencySchema = z.object({
   /** Number of decimals the currency supports. */
   decimals: z.number().int().nonnegative(),
 })
-export type NativeCurrency = z.infer<typeof NativeCurrencySchema>
 
 /**
  * Schema for gas price providers.
@@ -43,7 +47,9 @@ export const GasPricingUrlSchema = z.object({
   /** URL to fetch gas price data. */
   url: z.string().url('Invalid URL format for gas price provider.'),
 })
-export type GasPricingUrl = z.infer<typeof GasPricingUrlSchema>
+
+/** Schema for explorer standards. */
+export const ExplorerStandardSchema = z.enum(['none', 'EIP3091', 'EIP3085'])
 
 /**
  * Schema for block explorer URLs.
@@ -54,9 +60,8 @@ export const ExplorersSchema = z.object({
   /** URL of the block explorer. */
   url: z.string().url('Invalid URL format for block explorer.'),
   /** Indicates if the block explorer supports standard transactions. */
-  standard: z.enum(['none', 'EIP3091', 'EIP3085']).optional(),
+  standard: ExplorerStandardSchema.optional(),
 })
-export type BlockExplorerUrl = z.infer<typeof ExplorersSchema>
 
 /**
  * Schema for bridges between blockchain networks.
@@ -67,7 +72,6 @@ export const BridgesSchema = z.object({
   /** URL of the bridge service. */
   url: z.string().url('Invalid URL format for bridge service.'),
 })
-export type BridgeUrl = z.infer<typeof BridgesSchema>
 
 /**
  * Schema for faucets providing test tokens.
@@ -78,7 +82,6 @@ export const FaucetSchema = z.object({
   /** URL of the faucet service. */
   url: z.string().url('Invalid URL format for faucet service.'),
 })
-export type Faucet = z.infer<typeof FaucetSchema>
 
 /**
  * Schema for market data identifiers.
@@ -86,8 +89,17 @@ export type Faucet = z.infer<typeof FaucetSchema>
 export const MarketDataIdsSchema = z.object({
   coinGeckoId: z.string().optional(),
   coinMarketCapId: z.string().optional(),
+  cryptoCompareId: z.string().optional(),
 })
-export type MarketDataIds = z.infer<typeof MarketDataIdsSchema>
+
+/**
+ * Schema for RPC node privacy.
+ */
+export const PrivacySchema = z.enum([
+  'no-tracking',
+  'semi-tracking',
+  'tracking',
+])
 
 /**
  * Schema for RPC node configurations.
@@ -100,13 +112,12 @@ export const NodeConfigBaseSchema = z.object({
   /** Indicates if the URL is using WebSockets. */
   isWSS: z.boolean().optional(),
   /** Indicates if the node tracks user activity. */
-  privacy: z.enum(['no-tracking', 'semi-tracking', 'tracking']).optional(),
+  privacy: PrivacySchema.optional(),
   /** Chunk limit for the node. */
-  chunkLimit: z.number().nonnegative(),
+  chunkLimit: z.number().positive(),
   /** Call data limit for the node. */
-  callDataLimit: z.number().nonnegative(),
+  callDataLimit: z.number().positive(),
 })
-export type NodeConfigBase = z.infer<typeof NodeConfigBaseSchema>
 
 /**
  * Authenticated provider types schema
@@ -117,19 +128,17 @@ export const AuthenticatedProviderTypeSchema = z.union([
   z.literal('alchemy'),
   z.literal('alchemyWSS'),
 ])
-export type AuthenticatedProviderType = z.infer<
-  typeof AuthenticatedProviderTypeSchema
->
 
 /**
  * Schema for authenticated node configurations.
  */
 export const AuthenticatedNodeConfigSchema = NodeConfigBaseSchema.extend({
-  requiresAuth: z.literal(true),
+  /**
+   * Used for App purposes only.
+   * Don't use this property for configuration files.
+   */
+  appID: z.string().optional(),
 })
-export type AuthenticatedNodeConfig = z.infer<
-  typeof AuthenticatedNodeConfigSchema
->
 
 /**
  * Schema for grouping node providers.
@@ -140,7 +149,6 @@ export const NodeProvidersSchema = z.object({
     .optional(),
   public: z.array(NodeConfigBaseSchema).optional(),
 })
-export type NodeProviders = z.infer<typeof NodeProvidersSchema>
 
 /**
  * Schema for parent chain configuration.
@@ -153,24 +161,61 @@ export const ParentChainSchema = z.object({
   /** Bridge services for asset transfers. */
   bridges: z.array(BridgesSchema).optional(),
 })
-export type ParentChain = z.infer<typeof ParentChainSchema>
 
 /**
- * Schema for individual feature objects.
+ * Enumerates recognized transaction features.
+ *
+ * Currently includes:
+ * - **LEGACY**: Pre-EIP-2930 transaction type
+ * - **EIP2930**: Adds optional access lists
+ * - **EIP1559**: Fee market implementation with maxFeePerGas, maxPriorityFeePerGas
+ */
+export const TransactionFeatureSchema = z.enum(
+  ['LEGACY', 'EIP2930', 'EIP1559'],
+  {
+    description: 'Recognized transaction feature types.',
+  },
+)
+
+/**
+ * Enumerates recognized blockchain-level features.
+ *
+ * Currently includes:
+ * - **EIP155**: Chain ID specification for replay protection
+ */
+export const BlockchainFeatureSchema = z.enum(
+  ['EIP1108', 'EIP155', 'EIP6551'],
+  {
+    description: 'Recognized blockchain feature types.',
+  },
+)
+
+/**
+ * Combines both `TransactionFeatureSchema` and `BlockchainFeatureSchema` into a single schema,
+ * allowing a unified set of recognized features to be used.
+ */
+export const SupportedFeatureSchema = z.union([
+  TransactionFeatureSchema,
+  BlockchainFeatureSchema,
+])
+
+/**
+ * Defines the structure for an individual feature object, strictly enforcing
+ * that its `name` matches one of the recognized features in `SupportedFeatureSchema`.
  */
 export const FeatureSchema = z.object({
-  /** Name of the feature (e.g., "EIP155"). */
-  name: z.string().min(1, 'Feature name cannot be empty.'),
+  /**
+   * The name of the feature (e.g. "EIP155" or "EIP2930"),
+   * required to be one of the recognized feature strings.
+   */
+  name: SupportedFeatureSchema,
 })
-export type Feature = z.infer<typeof FeatureSchema>
 
 /** Schema for red flags or warnings about the blockchain network. */
 export const RedFlagSchema = z.enum(['reusedChainId'])
-export type RedFlag = z.infer<typeof RedFlagSchema>
 
 /** Schema for status of the blockchain network. */
 export const StatusSchema = z.enum(['active', 'incubating', 'deprecated'])
-export type Status = z.infer<typeof StatusSchema>
 
 /**
  * Schema for blockchain network configuration.
@@ -180,7 +225,7 @@ export const ChainConfigSchema = z
     /** Unique identifier for the blockchain network. */
     chainId: ChainIdSchema,
     /** Network ID for the blockchain network. */
-    networkId: ChainIdSchema,
+    networkId: NetworkIdSchema,
     /** SLIP-44 identifier for the blockchain network. */
     slip44: z.number().int().nonnegative().optional(),
     /** Full canonical name of the blockchain network. */
@@ -200,9 +245,21 @@ export const ChainConfigSchema = z
     /** URL to the logo image of the network. */
     logoUrl: z.string().url().optional(),
     /** Hex or RGB color associated with the network. */
-    color: z
-      .string()
-      .regex(/^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/, 'Invalid color format.'),
+    color: z.string().regex(
+      new RegExp(
+        '^(' +
+          // Hex (#RGB or #RRGGBB), optional leading '#'
+          '#?(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})' +
+          '|' +
+          // rgb(r, g, b) with optional spaces
+          'rgb\\(\\s*\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*\\)' +
+          '|' +
+          // rgba(r, g, b, a) with optional spaces, alpha between 0-1
+          'rgba\\(\\s*\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*,\\s*(?:0(?:\\.\\d+)?|1(?:\\.0)?)\\s*\\)' +
+          ')$',
+      ),
+      'Invalid color format. Must be a valid hex, rgb(), or rgba() string.',
+    ),
     /** Native currency of the blockchain. */
     nativeCurrency: NativeCurrencySchema,
     /** Gas pricing APIs. */
@@ -224,7 +281,7 @@ export const ChainConfigSchema = z
       .optional(),
     /** Parent chain configuration. */
     parent: ParentChainSchema.optional(),
-    /** Features supported by the blockchain network. */
+    /** Feature supported by the blockchain network. */
     features: z.array(FeatureSchema).optional(),
     /** URL for information about the blockchain network. */
     infoUrl: z.string().url().optional(),
@@ -241,5 +298,3 @@ export const ChainConfigSchema = z
     path: ['name', 'slug'],
     message: 'name and shortName must be different.',
   })
-
-export type ChainConfig = z.infer<typeof ChainConfigSchema>

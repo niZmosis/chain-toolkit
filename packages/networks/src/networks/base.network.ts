@@ -4,7 +4,7 @@ import {
   ethMainChainId,
   ethSepoliaChainId,
 } from '@chain-toolkit/chains'
-import type { ChainConfig, ChainId } from '@chain-toolkit/schemas'
+import type { ChainConfig, ChainId } from '@chain-toolkit/types'
 
 const commonProps: Omit<
   ChainConfig,
@@ -74,7 +74,6 @@ export class BaseNetwork {
           isWSS: false,
           chunkLimit: 50_000,
           callDataLimit: 100_000,
-          requiresAuth: true,
         },
         infuraWSS: {
           name: 'Infura WSS',
@@ -82,7 +81,6 @@ export class BaseNetwork {
           isWSS: true,
           chunkLimit: 50_000,
           callDataLimit: 100_000,
-          requiresAuth: true,
         },
       },
       public: [

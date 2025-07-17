@@ -31,6 +31,6 @@
     "dev": "node ./dist/index.js"
   },
   "devDependencies": {
-    "@chain-toolkit/schemas": "workspace:*"
+    "@chain-toolkit/types": "workspace:*"
   }
 }

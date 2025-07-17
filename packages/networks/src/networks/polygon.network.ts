@@ -1,5 +1,5 @@
 import { polygonAmoyChainId, polygonMainChainId } from '@chain-toolkit/chains'
-import type { ChainId, ChainConfig } from '@chain-toolkit/schemas'
+import type { ChainId, ChainConfig } from '@chain-toolkit/types'
 
 const commonProps: Omit<
   ChainConfig,
@@ -67,7 +67,6 @@ export class PolygonNetwork {
             chunkLimit: 50_000,
             callDataLimit: 100_000,
             isWSS: false,
-            requiresAuth: true,
           },
           infuraWSS: {
             name: 'Infura WSS',
@@ -75,7 +74,6 @@ export class PolygonNetwork {
             chunkLimit: 50_000,
             callDataLimit: 100_000,
             isWSS: true,
-            requiresAuth: true,
           },
         },
         public: [
@@ -209,7 +207,6 @@ export class PolygonNetwork {
             chunkLimit: 50_000,
             callDataLimit: 100_000,
             isWSS: false,
-            requiresAuth: true,
           },
           infuraWSS: {
             name: 'Infura WSS',
@@ -217,7 +214,6 @@ export class PolygonNetwork {
             chunkLimit: 50_000,
             callDataLimit: 100_000,
             isWSS: true,
-            requiresAuth: true,
           },
         },
         public: [

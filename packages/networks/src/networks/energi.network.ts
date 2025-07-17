@@ -1,5 +1,5 @@
 import { energiMainChainId, energiTestChainId } from '@chain-toolkit/chains'
-import type { ChainConfig, ChainId } from '@chain-toolkit/schemas'
+import type { ChainConfig, ChainId } from '@chain-toolkit/types'
 
 const commonProps: Omit<
   ChainConfig,
